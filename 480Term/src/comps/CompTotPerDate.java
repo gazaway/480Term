@@ -61,7 +61,7 @@ public class CompTotPerDate {
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 
-		Job job = new Job(conf, "commonComps");
+		Job job = new Job(conf, "compTotPerDate");
 
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
