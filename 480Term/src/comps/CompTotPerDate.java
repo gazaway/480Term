@@ -62,7 +62,7 @@ public class CompTotPerDate {
 		Configuration conf = new Configuration();
 
 		Job job = new Job(conf, "compTotPerDate");
-
+		job.setJarByClass(CommonComps.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
 

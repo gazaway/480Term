@@ -58,7 +58,7 @@ public class CommonComps {
 		Configuration conf = new Configuration();
 
 		Job job = new Job(conf, "commonComps");
-
+		job.setJarByClass(CommonComps.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
 
