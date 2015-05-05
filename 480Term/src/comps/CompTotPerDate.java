@@ -18,7 +18,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class CompTotPerDate {
 
-	public static class MapA extends Mapper<LongWritable, Text, Text, IntWritable> {
+	public static class MapB extends Mapper<LongWritable, Text, Text, IntWritable> {
 		
 		@Override
 		public void map(LongWritable key, Text input, Context context) throws IOException, InterruptedException {
@@ -66,7 +66,7 @@ public class CompTotPerDate {
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
 
-		job.setMapperClass(MapA.class);
+		job.setMapperClass(MapB.class);
 		job.setReducerClass(Reduce.class);
 
 		job.setInputFormatClass(TextInputFormat.class);
