@@ -33,12 +33,12 @@ public class CompTotPerDate {
 						entry = split[1];
 						split = entry.split(",");
 						split[0] = split[0].replace("\"when\":", "");
-						StringBuilder temp = new StringBuilder(split[0]);
-						temp.replace(split[0].length()-2, split[0].length(), "XX");
-						split[0] = temp.toString();
-						split[1] = split[1].replace("\"what\":", "");
+						int num = Integer.parseInt(split[0]);
+						num = num/10000000;
+						split[0] = String.valueOf(num).trim();
+						split[1] = split[1].replace("\"what\":", "").trim();
 						split[1] = split[1].replace("\"", "");
-						context.write(new Text(split[0] + " " + split[1]), new IntWritable(1));
+						context.write(new Text(split[0] + '\t' + split[1] + '\t'), new IntWritable(1));
 					}
 				}
 			}
@@ -75,6 +75,7 @@ public class CompTotPerDate {
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
-		job.waitForCompletion(true);
+		boolean result = job.waitForCompletion(true);
+		System.exit(result ? 0 : 1);
 	}
 }
