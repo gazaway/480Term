@@ -65,7 +65,7 @@ public class CompTotPerDate {
 	}
 
 	@SuppressWarnings("deprecation")
-	public void run(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 
 		Job job = new Job(conf, "compTotPerDate");
