@@ -10,7 +10,7 @@ public class BackRunner {
 			cc.run(args);
 		} catch (Exception e) {
 			System.out.println("Error running CommonComps");
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		CompTotPerDate ct = new CompTotPerDate();
 		try {
@@ -19,16 +19,25 @@ public class BackRunner {
 			ct.run(args);
 		} catch (Exception e) {
 			System.out.println("Error running CompTotPerDate");
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		MapRedCCTranslate mRCCT =  new MapRedCCTranslate();
 		try {
-			//IN: s3://480term/cc & s3://480term/cd
+			//IN: s3://480term/cc
 			//OUT: args[1]
 			mRCCT.run(args);
 		} catch (Exception e) {
 			System.out.println("Error running CompTotPerDate");
-			e.printStackTrace();
+			System.out.println(e);
+		}
+		MapRedCDTranslate mRCDT =  new MapRedCDTranslate();
+		try {
+			//IN: s3://480term/cd
+			//OUT: args[1]
+			mRCDT.run(args);
+		} catch (Exception e) {
+			System.out.println("Error running CompTotPerDate");
+			System.out.println(e);
 		}
 		System.exit(0);
 	}
