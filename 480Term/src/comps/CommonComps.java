@@ -61,7 +61,7 @@ public class CommonComps {
 		Job job = new Job(conf, "commonComps");
 		job.setJarByClass(CommonComps.class);
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(Text.class);
+		job.setOutputValueClass(IntWritable.class);
 
 		job.setMapperClass(MapA.class);
 		job.setReducerClass(Reduce.class);
