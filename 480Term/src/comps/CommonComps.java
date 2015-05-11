@@ -55,7 +55,7 @@ public class CommonComps {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static void run(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 
 		Job job = new Job(conf, "commonComps");
