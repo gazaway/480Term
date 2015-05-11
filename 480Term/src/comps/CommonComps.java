@@ -33,6 +33,10 @@ public class CommonComps {
 						String temp = entryToke.nextToken().toString();
 						if (temp.contains("what")){
 							String[] split = temp.split(":");
+							split[1] = split[1].replace("\"", "");
+							if (split[1].contains("pdate")){
+								split[1] = "Update";
+							}
 							context.write(new Text(split[1].replace("\"", "")), new IntWritable(1));
 						}
 					}
