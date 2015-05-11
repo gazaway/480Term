@@ -27,9 +27,10 @@ public class MapRedCDTranslate {
 	public static class Reduce extends Reducer<Text, IntWritable, Text, Text> {
 
 		public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+			String[] keys = key.toString().trim().split(" ");
 			if (values != null){
 				for (IntWritable i : values) {
-					context.write(new Text("INSERT INTO 'component_per_date' values ('" + key.toString().trim()), new Text("', " + i.get() + ");"));
+					context.write(new Text("INSERT INTO 'component_per_date' values ('" + keys[0] + "', '" + keys[1] +  "', " + i.get() + ");"), new Text(""));
 				}
 			}
 		}

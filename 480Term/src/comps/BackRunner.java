@@ -33,7 +33,7 @@ public class BackRunner {
 		MapRedCDTranslate mRCDT =  new MapRedCDTranslate();
 		try {
 			//IN: s3://480term/cd
-			//OUT: args[1]
+			//OUT: args[2]
 			mRCDT.run(args);
 		} catch (Exception e) {
 			System.out.println("Error running CompTotPerDate");
