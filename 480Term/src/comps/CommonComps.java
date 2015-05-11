@@ -41,7 +41,7 @@ public class CommonComps {
 		}
 	}
 
-	public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+	public static class Reduce extends Reducer<Text, IntWritable, Text, Text> {
 
 		public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 			int sum = 0;
@@ -49,7 +49,8 @@ public class CommonComps {
 			for (IntWritable val : values) {
 				sum += val.get();
 			}
-			context.write(key, new IntWritable(sum));
+			context.write(key, new Text(""));
+			context.write(new Text("INSERT INTO 'component_count' values ('" + key +  "', " + sum + ");"), new Text(""));
 		}
 	}
 
@@ -60,7 +61,7 @@ public class CommonComps {
 		Job job = new Job(conf, "commonComps");
 		job.setJarByClass(CommonComps.class);
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
+		job.setOutputValueClass(Text.class);
 
 		job.setMapperClass(MapA.class);
 		job.setReducerClass(Reduce.class);
@@ -69,7 +70,7 @@ public class CommonComps {
 		job.setOutputFormatClass(TextOutputFormat.class);
 
 		FileInputFormat.addInputPath(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path("s3://480term/cc/"));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		boolean result = job.waitForCompletion(true);
 		System.exit(result ? 0 : 1);
