@@ -1,6 +1,8 @@
 package comps;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configuration;
@@ -33,12 +35,17 @@ public class CompTotPerDate {
 						entry = split[1];
 						split = entry.split(",");
 						split[0] = split[0].replace("\"when\":", "");
-						int num = Integer.parseInt(split[0]);
-						num = num/10000000;
-						split[0] = String.valueOf(num).trim();
 						split[1] = split[1].replace("\"what\":", "").trim();
 						split[1] = split[1].replace("\"", "");
-						context.write(new Text(split[0] + '\t' + split[1] + '\t'), new IntWritable(1));
+						int num = Integer.parseInt(split[0]);
+						try {
+							Date date = new Date(num);
+							SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyy");
+							split[0] = format.format(date).toString();
+							context.write(new Text(split[0] + '\t' + split[1] + '\t'), new IntWritable(1));
+						} catch (Exception e){
+							System.out.println("Error parsing date: " + num +". Removing entry " + split[1]);
+						}
 					}
 				}
 			}
@@ -58,7 +65,7 @@ public class CompTotPerDate {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static void main(String[] args) throws Exception {
+	public void run(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 
 		Job job = new Job(conf, "compTotPerDate");
@@ -73,7 +80,7 @@ public class CompTotPerDate {
 		job.setOutputFormatClass(TextOutputFormat.class);
 
 		FileInputFormat.addInputPath(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		FileOutputFormat.setOutputPath(job, new Path("s3://480term/cd/"));
 		
 		boolean result = job.waitForCompletion(true);
 		System.exit(result ? 0 : 1);

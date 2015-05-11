@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 
 
-public class Translate {
+public class Parser {
 	public void translate(String directory) throws IOException {
 		File folder = new File(directory);
 		File[] list = folder.listFiles();
@@ -38,7 +38,7 @@ public class Translate {
 	}
 	
 	public static void main(String args[]) throws IOException {
-		Translate tr = new Translate();
+		Parser tr = new Parser();
 		tr.translate(args[0]);
 	}
 }

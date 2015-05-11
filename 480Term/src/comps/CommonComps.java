@@ -54,7 +54,7 @@ public class CommonComps {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static void main(String[] args) throws Exception {
+	public void run(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 
 		Job job = new Job(conf, "commonComps");
@@ -69,7 +69,7 @@ public class CommonComps {
 		job.setOutputFormatClass(TextOutputFormat.class);
 
 		FileInputFormat.addInputPath(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path(args[1]));
+		FileOutputFormat.setOutputPath(job, new Path("s3://480term/cc/"));
 		
 		boolean result = job.waitForCompletion(true);
 		System.exit(result ? 0 : 1);

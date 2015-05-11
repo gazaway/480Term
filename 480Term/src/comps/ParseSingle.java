@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
-public class TransSingle {
+public class ParseSingle {
 	
 	public void translate() throws IOException {
 		String file = "reports.json";
@@ -23,7 +23,7 @@ public class TransSingle {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		TransSingle tr = new TransSingle();
+		ParseSingle tr = new ParseSingle();
 		tr.translate();
 
 	}
