@@ -27,7 +27,7 @@ public class CommonComps {
 				String line = toke.nextToken().toString();
 				StringTokenizer lineToke = new StringTokenizer(line, "}");
 				while (lineToke.hasMoreTokens()){
-					String entry = toke.nextToken();
+					String entry = lineToke.nextToken();
 					StringTokenizer entryToke = new StringTokenizer(entry, ",");
 					while (entryToke.hasMoreTokens()){
 						String temp = entryToke.nextToken().toString();
