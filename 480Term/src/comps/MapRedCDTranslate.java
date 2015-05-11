@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -16,11 +17,11 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
 public class MapRedCDTranslate {
 
-	public static class MapD extends Mapper<Text, IntWritable, Text, IntWritable> {
+	public static class MapD extends Mapper<LongWritable, IntWritable, Text, IntWritable> {
 		
 		@Override
-		public void map(Text key, IntWritable input, Context context) throws IOException, InterruptedException {
-			context.write(key, input);
+		public void map(LongWritable key, IntWritable input, Context context) throws IOException, InterruptedException {
+			context.write(new Text(key.toString()), input);
 		}
 	}
 
@@ -48,6 +49,7 @@ public class MapRedCDTranslate {
 		
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);
+		
 		job.setMapperClass(MapD.class);
 		job.setReducerClass(Reduce.class);
 		job.setInputFormatClass(TextInputFormat.class);

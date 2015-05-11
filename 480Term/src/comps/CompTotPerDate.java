@@ -37,6 +37,9 @@ public class CompTotPerDate {
 						split[0] = split[0].replace("\"when\":", "");
 						split[1] = split[1].replace("\"what\":", "").trim();
 						split[1] = split[1].replace("\"", "");
+						if (split[1].contains("pdate")){
+							split[1] = "Update";
+						}
 						context.write(new Text(split[0] + '\t' + split[1] + '\t'), new IntWritable(1));
 					}
 				}
@@ -44,15 +47,18 @@ public class CompTotPerDate {
 		}
 	}
 
-	public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+	public static class Reduce extends Reducer<Text, IntWritable, Text, Text> {
 
 		public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
 			int sum = 0;
+			String[] keys = key.toString().trim().split("\t");
 			//Just need to sum the the number of occurrences together.
 			for (IntWritable val : values) {
 				sum += val.get();
 			}
-			context.write(key, new IntWritable(sum));
+			if (keys[1] != null) {
+				context.write(new Text("INSERT INTO 'component_per_date' values ('" + keys[0].trim() + "', '" + keys[1].trim() +  "', " + sum + ");"), new Text(""));
+			}
 		}
 	}
 
