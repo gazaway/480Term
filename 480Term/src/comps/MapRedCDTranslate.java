@@ -43,8 +43,8 @@ public class MapRedCDTranslate {
 		Job job = new Job(conf, "commonDatesTrans");
 		job.setJarByClass(MapRedCDTranslate.class);
 		
-		FileInputFormat.addInputPath(job, new Path("s3://480term/cd/"));
-		FileOutputFormat.setOutputPath(job, new Path(args[2]));
+		FileInputFormat.addInputPath(job, new Path(args[0]));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(IntWritable.class);

@@ -37,15 +37,7 @@ public class CompTotPerDate {
 						split[0] = split[0].replace("\"when\":", "");
 						split[1] = split[1].replace("\"what\":", "").trim();
 						split[1] = split[1].replace("\"", "");
-						int num = Integer.parseInt(split[0]);
-						try {
-							Date date = new Date(num);
-							SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyy");
-							split[0] = format.format(date).toString();
-							context.write(new Text(split[0] + '\t' + split[1] + '\t'), new IntWritable(1));
-						} catch (Exception e){
-							System.out.println("Error parsing date: " + num +". Removing entry " + split[1]);
-						}
+						context.write(new Text(split[0] + '\t' + split[1] + '\t'), new IntWritable(1));
 					}
 				}
 			}
@@ -80,7 +72,7 @@ public class CompTotPerDate {
 		job.setOutputFormatClass(TextOutputFormat.class);
 
 		FileInputFormat.addInputPath(job, new Path(args[0]));
-		FileOutputFormat.setOutputPath(job, new Path("s3://480term/cd/"));
+		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 		
 		boolean result = job.waitForCompletion(true);
 		System.exit(result ? 0 : 1);
